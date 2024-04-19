@@ -1,6 +1,6 @@
 import { DataType, getSchemasTypes } from './cumpute-schema/getDataType';
 
-type Schema = {
+export type Schema = {
   display: string;
   name: string;
   type: DataType;

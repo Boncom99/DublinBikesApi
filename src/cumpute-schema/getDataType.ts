@@ -89,10 +89,12 @@ function getTypeOfValue(input: any): DataType | null {
   return 'unknown';
 }
 export const getSchemasTypes = (content: any[]): keyType => {
-  const arrayOfTypesPerKey = getArrayOfTypesPerKey(content);
+  const arrayOfTypesAndOptionsPerKey = getArrayOfTypesPerKey(content);
 
   //Check if data type is "option" instead of Text
-  Object.entries(arrayOfTypesPerKey).reduce(
+  const arrayOfTypesPerKey = Object.entries(
+    arrayOfTypesAndOptionsPerKey,
+  ).reduce(
     (acc, [key, { dataTypes, options }]) => {
       if (!dataTypes.includes('string')) {
         acc[key] = dataTypes;
@@ -116,7 +118,7 @@ export const getSchemasTypes = (content: any[]): keyType => {
   //else if there are multiple values, return the most common value if the proportion is higher than 80%
   //else, return 'unknown'
   return Object.entries(arrayOfTypesPerKey).reduce(
-    (acc, [key, { dataTypes, options }]) => {
+    (acc, [key, dataTypes]) => {
       if (dataTypes.every((t) => t === dataTypes[0])) {
         //All data types are the same
         acc[key] = dataTypes[0];
@@ -132,6 +134,7 @@ export const getSchemasTypes = (content: any[]): keyType => {
           dataTypes.length;
         if (proportion > 0.85) {
           //if the most common data type is more than 85%, we consider it is the data type
+          console.warn('not all the values have the same type');
           acc[key] = mostCommonValue;
         } else {
           acc[key] = 'unknown';
