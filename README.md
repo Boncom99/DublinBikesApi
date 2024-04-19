@@ -1,5 +1,5 @@
-# Server to get schema and filtered data of Dublins' bikes
-
+#Dublins' bikes SERVER
+##missing screenshots!!
 
 ## Quick Start
 
